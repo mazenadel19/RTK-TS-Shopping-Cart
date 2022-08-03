@@ -23,9 +23,9 @@ const initialState: ICartState = {
 
 export const checkoutCart = createAsyncThunk(
   "cart/checkout",
-  async (_,thunkAPI) => {
+  async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const items = state.cart.items
+    const items = state.cart.items;
     const response = await checkout(items);
     return response;
   }
@@ -36,6 +36,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<string>) {
+      state.checkoutState = "READY";
       const id = action.payload;
       if (state.items[id]) {
         state.items[id]++;
