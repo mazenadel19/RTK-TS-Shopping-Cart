@@ -4,8 +4,8 @@ import {
   PayloadAction,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
-import { checkout, CartItems } from "../../app/api";
-import { RootState, AppDispatch } from "..";
+import { checkout } from "../../app/api";
+import { RootState } from "..";
 
 export type ICheckoutState = "LOADING" | "READY" | "ERROR";
 
