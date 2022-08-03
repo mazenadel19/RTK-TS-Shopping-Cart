@@ -17,6 +17,5 @@ Example shopping cart application for learning redux and redux toolkit.
 - TypeScript
 - Bootstrap
 - CSS Modules
-- classnames
 - react-redux
 - reduxjs/toolkit
