@@ -1,16 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
-import cartReducer from './reducers/CartSlice'
-import productReducer from './reducers/ProductSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from './reducers/CartSlice';
+import productReducer from './reducers/ProductSlice';
 
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
     products: productReducer,
   },
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 /**
  * ReturnType is a typescript utility that transform

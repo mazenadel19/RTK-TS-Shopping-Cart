@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './Home.module.css'
+import React from 'react';
+import styles from './Home.module.css';
 
 export function Home() {
   return (
@@ -14,5 +14,5 @@ export function Home() {
         <figcaption>Gary Houston, CC0, via Wikimedia Commons</figcaption>
       </figure>
     </main>
-  )
+  );
 }

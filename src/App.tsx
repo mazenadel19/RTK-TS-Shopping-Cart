@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import styles from './App.module.css'
-import { Home } from './features/home/Home'
-import { Cart } from './features/cart/Cart'
-import { CartLink } from './features/cart/CartLink'
-import { Products } from './features/products/Products'
+import React from 'react';
+import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import styles from './App.module.css';
+import { Home } from './features/home/Home';
+import { Cart } from './features/cart/Cart';
+import { CartLink } from './features/cart/CartLink';
+import { Products } from './features/products/Products';
 
 function App() {
   return (
@@ -36,7 +36,7 @@ function App() {
         </Switch>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
