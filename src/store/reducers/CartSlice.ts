@@ -3,11 +3,11 @@ import {
   createAsyncThunk,
   createSelector,
   createSlice,
-} from '@reduxjs/toolkit';
-import { RootState } from '..';
-import { checkout } from '../../app/api';
+} from "@reduxjs/toolkit";
+import { RootState } from "..";
+import { checkout } from "../../app/api";
 
-export type ICheckoutState = 'LOADING' | 'READY' | 'ERROR';
+export type ICheckoutState = "LOADING" | "READY" | "ERROR";
 
 export interface ICartState {
   items: { [productID: string]: number };
@@ -17,12 +17,12 @@ export interface ICartState {
 
 const initialState: ICartState = {
   items: {},
-  checkoutState: 'READY',
-  errorMessage: '',
+  checkoutState: "READY",
+  errorMessage: "",
 };
 
 export const checkoutCart = createAsyncThunk(
-  'cart/checkout',
+  "cart/checkout",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const items = state.cart.items;
@@ -32,11 +32,11 @@ export const checkoutCart = createAsyncThunk(
 );
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<string>) {
-      state.checkoutState = 'READY';
+      state.checkoutState = "READY";
       const id = action.payload;
       if (state.items[id]) {
         state.items[id]++;
@@ -58,23 +58,23 @@ const cartSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(checkoutCart.pending, (state) => {
-      state.checkoutState = 'LOADING';
+      state.checkoutState = "LOADING";
     });
     builder.addCase(
       checkoutCart.fulfilled,
       (state, action: PayloadAction<{ success: boolean }>) => {
         const { success } = action.payload;
         if (success) {
-          state.checkoutState = 'READY';
+          state.checkoutState = "READY";
           state.items = {};
         } else {
-          state.checkoutState = 'ERROR';
+          state.checkoutState = "ERROR";
         }
       },
     );
     builder.addCase(checkoutCart.rejected, (state, action) => {
-      state.checkoutState = 'ERROR';
-      state.errorMessage = action.error.message ?? '';
+      state.checkoutState = "ERROR";
+      state.errorMessage = action.error.message ?? "";
     });
   },
 });
@@ -110,7 +110,7 @@ export const getMemoizedNumItems = createSelector(
   (state: RootState) => state.cart.items, // Input Selectors
   (items) => {
     // Result Function
-    console.log('getMemoizedNumItems called');
+    console.log("getMemoizedNumItems called");
     let numItems = 0;
     for (const id of Object.keys(items)) {
       numItems += items[id];

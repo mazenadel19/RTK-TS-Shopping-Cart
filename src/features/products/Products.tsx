@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
-import { getProducts } from '../../app/api';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
-import { addToCart } from '../../store/reducers/CartSlice';
+import React, { useCallback, useEffect } from "react";
+import { getProducts } from "../../app/api";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { addToCart } from "../../store/reducers/CartSlice";
 import {
   ProductsState,
   receivedProduct,
-} from '../../store/reducers/ProductSlice';
-import styles from './Products.module.css';
+} from "../../store/reducers/ProductSlice";
+import styles from "./Products.module.css";
 
 export function Products() {
   const { products } = useAppSelector(ProductsState);

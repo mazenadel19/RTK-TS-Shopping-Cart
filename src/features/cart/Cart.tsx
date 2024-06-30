@@ -1,12 +1,12 @@
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import {
   cartState,
   checkoutCart,
   getTotalPrice,
-} from '../../store/reducers/CartSlice';
-import styles from './Cart.module.css';
-import CartItem from './CartItem';
+} from "../../store/reducers/CartSlice";
+import styles from "./Cart.module.css";
+import CartItem from "./CartItem";
 
 export function Cart() {
   const dispatch = useAppDispatch();
@@ -19,9 +19,9 @@ export function Cart() {
   }
 
   const baseTableClass =
-    checkoutState === 'LOADING' ? styles.checkoutLoading : styles.table;
+    checkoutState === "LOADING" ? styles.checkoutLoading : styles.table;
   const tableClasses =
-    checkoutState === 'ERROR' ? styles.checkoutError : baseTableClass;
+    checkoutState === "ERROR" ? styles.checkoutError : baseTableClass;
 
   return (
     <main className="page">
@@ -52,7 +52,7 @@ export function Cart() {
         </table>
       </div>
       <form onSubmit={onCheckout}>
-        {checkoutState === 'ERROR' && errorMessage ? (
+        {checkoutState === "ERROR" && errorMessage ? (
           <p className={styles.errorBox}>{errorMessage}</p>
         ) : null}
         <button className={`${styles.button} btn`} type="submit">

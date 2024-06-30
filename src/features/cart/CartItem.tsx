@@ -1,10 +1,10 @@
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 
-import { removeFromCart, updateQuantity } from '../../store/reducers/CartSlice';
-import { ProductsState } from '../../store/reducers/ProductSlice';
+import { removeFromCart, updateQuantity } from "../../store/reducers/CartSlice";
+import { ProductsState } from "../../store/reducers/ProductSlice";
 
-import styles from './CartItem.module.css';
+import styles from "./CartItem.module.css";
 
 export interface ICartItemProps {
   id: string;

@@ -9,7 +9,7 @@ export interface Product {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  const results = await fetch('/products.json');
+  const results = await fetch("/products.json");
   return results.json();
 }
 
@@ -17,7 +17,7 @@ export type CartItems = { [productID: string]: number };
 export type CheckoutResponse = { success: boolean; error?: string };
 
 export async function checkout(items: CartItems): Promise<CheckoutResponse> {
-  const modifier = Object.keys(items).length > 0 ? 'success' : 'error';
+  const modifier = Object.keys(items).length > 0 ? "success" : "error";
   const url = `/checkout-${modifier}.json`;
   await sleep(500);
   const response = await fetch(url);
