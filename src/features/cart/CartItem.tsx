@@ -15,7 +15,10 @@ const CartItem = ({ id, quantity }: ICartItemProps) => {
   const dispatch = useAppDispatch();
   const { products } = useAppSelector(ProductsState);
 
-  function onQuantityChange(e: React.FocusEvent<HTMLInputElement>, id: string) {
+  function onQuantityChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string,
+  ) {
     const quantity = Number(e.target.value) || 1;
     dispatch(updateQuantity({ id, quantity: quantity >= 1 ? quantity : 1 }));
   }
@@ -27,10 +30,8 @@ const CartItem = ({ id, quantity }: ICartItemProps) => {
         <input
           type="number"
           className={styles.input}
-          defaultValue={quantity >= 1 ? quantity : 1}
-          onBlur={(e) => {
-            onQuantityChange(e, id);
-          }}
+          value={quantity >= 1 ? quantity : 1}
+          onChange={(e) => onQuantityChange(e, id)}
         />
       </td>
       <td>{products[id].price}</td>
