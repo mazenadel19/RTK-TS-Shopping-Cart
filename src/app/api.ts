@@ -10,8 +10,7 @@ export interface Product {
 
 export async function getProducts(): Promise<Product[]> {
   const results = await fetch("/products.json");
-  const products = results.json();
-  return products;
+  return results.json();
 }
 
 export type CartItems = { [productID: string]: number };

@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import styles from "./App.module.css";
+import { Home } from "./features/home/Home";
 import { Cart } from "./features/cart/Cart";
 import { CartLink } from "./features/cart/CartLink";
 import { Products } from "./features/products/Products";
@@ -39,19 +40,3 @@ function App() {
 }
 
 export default App;
-
-function Home() {
-  return (
-    <main className="page">
-      <h1>Welcome to the Store</h1>
-      <figure>
-        <img
-          src="/store.jpg"
-          alt="A large old storefront"
-          className={styles.storeImg}
-        />
-        <figcaption>Gary Houston, CC0, via Wikimedia Commons</figcaption>
-      </figure>
-    </main>
-  );
-}

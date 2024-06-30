@@ -1,24 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { getProducts } from "../../app/api";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { addToCart } from "../../store/reducers/CartSlice";
 import {
   ProductsState,
-  recievedProduct,
+  receivedProduct,
 } from "../../store/reducers/ProductSlice";
 import styles from "./Products.module.css";
 
 export function Products() {
-  // const products = useAppSelector(state => state.products.products)
   const { products } = useAppSelector(ProductsState);
   const ProductsArray = Object.values(products);
-  const disaptch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = useCallback(
+    (product) => {
+      dispatch(addToCart(product.id));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     getProducts().then((products) => {
-      disaptch(recievedProduct(products));
+      dispatch(receivedProduct(products));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className="page">
@@ -39,10 +45,7 @@ export function Products() {
               </div>
             </article>
             <div className="d-flex justify-content-end">
-              <button
-                className="btn"
-                onClick={() => disaptch(addToCart(product.id))}
-              >
+              <button className="btn" onClick={() => handleAddToCart(product)}>
                 Add to Cart 🛒
               </button>
             </div>

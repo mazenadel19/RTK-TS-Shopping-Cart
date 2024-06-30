@@ -1,11 +1,11 @@
 import {
-  createSelector,
-  createSlice,
   PayloadAction,
   createAsyncThunk,
+  createSelector,
+  createSlice,
 } from "@reduxjs/toolkit";
-import { checkout } from "../../app/api";
 import { RootState } from "..";
+import { checkout } from "../../app/api";
 
 export type ICheckoutState = "LOADING" | "READY" | "ERROR";
 
@@ -26,9 +26,9 @@ export const checkoutCart = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const items = state.cart.items;
-    const response = await checkout(items);
-    return response;
-  }
+    return checkout(items);
+    // same as return await checkout(items) Since the async function automatically wraps its return value in a promise, you don't need to explicitly use await when returning a promise.
+  },
 );
 
 const cartSlice = createSlice({
@@ -46,22 +46,18 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action: PayloadAction<string>) {
       const id = action.payload;
-      // if (state.items[id] > 1) {
-      //   state.items[id]--;
-      // } else {
       delete state.items[id];
-      // }
     },
     updateQuantity(
       state,
-      action: PayloadAction<{ id: string; quantity: number }>
+      action: PayloadAction<{ id: string; quantity: number }>,
     ) {
       const { id, quantity } = action.payload;
       state.items[id] = quantity;
     },
   },
-  extraReducers: function (builder) {
-    builder.addCase(checkoutCart.pending, (state, action) => {
+  extraReducers(builder) {
+    builder.addCase(checkoutCart.pending, (state) => {
       state.checkoutState = "LOADING";
     });
     builder.addCase(
@@ -74,11 +70,11 @@ const cartSlice = createSlice({
         } else {
           state.checkoutState = "ERROR";
         }
-      }
+      },
     );
     builder.addCase(checkoutCart.rejected, (state, action) => {
       state.checkoutState = "ERROR";
-      state.errorMessage = action.error.message || "";
+      state.errorMessage = action.error.message ?? "";
     });
   },
 });
@@ -92,8 +88,7 @@ export const cartState = (state: RootState) => state.cart;
 export const getNumItems = (state: RootState) => {
   let numItems = 0;
   const { items } = state.cart;
-  //   numItems = Object.keys(items).length
-  for (const id in items) {
+  for (const id of Object.keys(items)) {
     numItems += items[id];
   }
   return numItems;
@@ -117,11 +112,11 @@ export const getMemoizedNumItems = createSelector(
     // Result Function
     console.log("getMemoizedNumItems called");
     let numItems = 0;
-    for (const id in items) {
+    for (const id of Object.keys(items)) {
       numItems += items[id];
     }
     return numItems;
-  }
+  },
 );
 
 // createSelector will take the items from the input Selector
@@ -133,9 +128,9 @@ export const getTotalPrice = createSelector(
   (items, products) => {
     // Result Function
     let totalPrice = 0;
-    for (const id in items) {
+    for (const id of Object.keys(items)) {
       totalPrice += products[id].price * items[id]; // price * quantity
     }
     return totalPrice.toFixed(2);
-  }
+  },
 );
