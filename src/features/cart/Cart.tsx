@@ -1,71 +1,27 @@
-import React from "react";
-// import classNames from "classnames";
-import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import React from 'react'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 import {
   cartState,
-  getTotalPrice,
-  removeFromCart,
-  updateQuantity,
   checkoutCart,
-} from "../../store/reducers/CartSlice";
-import { ProductsState } from "../../store/reducers/ProductSlice";
-import styles from "./Cart.module.css";
+  getTotalPrice,
+} from '../../store/reducers/CartSlice'
+import styles from './Cart.module.css'
+import CartItem from './CartItem'
 
 export function Cart() {
-  const dispatch: any = useAppDispatch();
-
-  const { items, checkoutState, errorMessage } = useAppSelector(cartState);
-  const { products } = useAppSelector(ProductsState);
-  const totalPrice = useAppSelector(getTotalPrice);
-
-  function onQuantityChange(e: React.FocusEvent<HTMLInputElement>, id: string) {
-    const quantity = Number(e.target.value) || 1;
-    dispatch(updateQuantity({ id, quantity: quantity >= 1 ? quantity : 1 }));
-  }
+  const dispatch = useAppDispatch()
+  const { items, checkoutState, errorMessage } = useAppSelector(cartState)
+  const totalPrice = useAppSelector(getTotalPrice)
 
   function onCheckout(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    dispatch(checkoutCart());
+    e.preventDefault()
+    dispatch(checkoutCart())
   }
 
+  const baseTableClass =
+    checkoutState === 'LOADING' ? styles.checkoutLoading : styles.table
   const tableClasses =
-    checkoutState === "ERROR"
-      ? styles.checkoutError
-      : checkoutState === "LOADING"
-      ? styles.checkoutLoading
-      : styles.table;
-
-  const Cart = () => {
-    return (
-      <>
-        {Object.entries(items).map(([id, quantity], index) => (
-          <tr key={index}>
-            <td>{products[id].name}</td>
-            <td>
-              <input
-                type="number"
-                className={styles.input}
-                defaultValue={quantity >= 1 ? quantity : 1}
-                onBlur={(e) => {
-                  onQuantityChange(e, id);
-                }}
-              />
-            </td>
-            <td>{products[id].price}</td>
-            <td>
-              <button
-                className="btn"
-                onClick={() => dispatch(removeFromCart(products[id].id))}
-                aria-label={`Remove ${products[id].name} from Shopping Cart`}
-              >
-                X
-              </button>
-            </td>
-          </tr>
-        ))}
-      </>
-    );
-  };
+    checkoutState === 'ERROR' ? styles.checkoutError : baseTableClass
 
   return (
     <main className="page">
@@ -81,20 +37,22 @@ export function Cart() {
             </tr>
           </thead>
           <tbody>
-            <Cart />
+            {Object.entries(items).map(([id, quantity]) => (
+              <CartItem key={id} id={id} quantity={quantity} />
+            ))}
           </tbody>
           <tfoot>
             <tr>
               <td>Total</td>
-              <td></td>
+              <td />
               <td className={styles.total}>{totalPrice}</td>
-              <td></td>
+              <td />
             </tr>
           </tfoot>
         </table>
       </div>
       <form onSubmit={onCheckout}>
-        {checkoutState === "ERROR" && errorMessage ? (
+        {checkoutState === 'ERROR' && errorMessage ? (
           <p className={styles.errorBox}>{errorMessage}</p>
         ) : null}
         <button className={`${styles.button} btn`} type="submit">
@@ -102,5 +60,5 @@ export function Cart() {
         </button>
       </form>
     </main>
-  );
+  )
 }

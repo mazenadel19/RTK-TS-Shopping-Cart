@@ -35,11 +35,6 @@
   padding: 0 1em;
 }
 
-.input {
-  font-size: 1em;
-  width: 3em;
-}
-
 .errorBox {
   color: red;
 }
