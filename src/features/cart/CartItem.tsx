@@ -30,8 +30,7 @@ const CartItem = ({ id, quantity }: ICartItemProps) => {
         <input
           type="number"
           className={styles.input}
-          value={quantity}
-          defaultValue={quantity >= 1 ? quantity : 1}
+          value={quantity >= 1 ? quantity : 1}
           onChange={(e) => onQuantityChange(e, id)}
         />
       </td>
